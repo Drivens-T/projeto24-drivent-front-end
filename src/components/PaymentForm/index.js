@@ -1,6 +1,7 @@
 import React from 'react';
 import Cards from 'react-credit-cards';
 import 'react-credit-cards/es/styles-compiled.css';
+import InputMask from 'react-input-mask';
 import styled from 'styled-components';
 import Button from '../Form/Button';
 
@@ -23,6 +24,12 @@ export default class PaymentForm extends React.Component {
     this.setState({ [name]: value });
   };
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+    // eslint-disable-next-line no-console
+    console.log(this.state);
+  };
+
   render() {
     return (
       <CardContainer>
@@ -33,16 +40,18 @@ export default class PaymentForm extends React.Component {
           name={this.state.name}
           number={this.state.number}
         />
-        <CardForm>
+        <CardForm onSubmit={this.handleSubmit}>
           <div>
-            <input
+            <InputMask
               type="tel"
               name="number"
               placeholder="Card Number"
-              size="16"
               required
               onChange={this.handleInputChange}
               onFocus={this.handleInputFocus}
+              mask="9999 9999 9999 9999"
+              maskChar=""
+              pattern="\b\d{4}[ ]?\d{4}[ ]?\d{4}[ ]?\d{4}\b"
             />
             <small>E.g.: 49..., 51..., 36..., 37...</small>
           </div>
@@ -55,7 +64,7 @@ export default class PaymentForm extends React.Component {
             onFocus={this.handleInputFocus}
           />
           <div>
-            <input
+            <InputMask
               type="tel"
               name="expiry"
               placeholder="Valid Thru"
@@ -63,13 +72,15 @@ export default class PaymentForm extends React.Component {
               required
               onChange={this.handleInputChange}
               onFocus={this.handleInputFocus}
-              width="200"
+              mask="99/99"
+              maskChar=""
             />
             <input
               type="tel"
               name="cvc"
               placeholder="CVC"
               pattern="\d{3,4}"
+              maxLength="4"
               required
               onChange={this.handleInputChange}
               onFocus={this.handleInputFocus}
