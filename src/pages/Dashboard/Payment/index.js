@@ -30,4 +30,9 @@ const SelectedBox = styled.div`
   height: 108px;
   border-radius: 20px;
   margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 8px;
 `;
