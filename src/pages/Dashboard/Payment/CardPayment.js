@@ -1,7 +1,7 @@
 import PaymentForm from '../../../components/PaymentForm';
 import { OptionCard, PageInformation } from '.';
 
-export default function CardPayment() {
+export default function CardPayment({ setCreditCardInfo }) {
   const card = {
     title: 'Presencial + Com Hotel',
     price: 'R$ 600',
@@ -15,7 +15,7 @@ export default function CardPayment() {
         <p>{card.price}</p>
       </OptionCard>
       <PageInformation>Pagamento</PageInformation>
-      <PaymentForm></PaymentForm>
+      <PaymentForm setCreditCardInfo={setCreditCardInfo}></PaymentForm>
     </>
   );
 }

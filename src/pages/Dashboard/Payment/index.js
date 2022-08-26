@@ -4,6 +4,10 @@ import { StyledTypography } from './../../../components/PersonalInformationForm'
 import CardPayment from './CardPayment';
 
 export default function Payment() {
+  const [creditCardInfo, setCreditCardInfo] = useState(null);
+  // eslint-disable-next-line no-console
+  console.log(creditCardInfo);
+
   const cardsExample = [
     {
       title: 'Presencial',
@@ -25,7 +29,7 @@ export default function Payment() {
             <CardsRow cards={cardsExample}></CardsRow>
           </>
         ) : (
-          <CardPayment />
+          <CardPayment setCreditCardInfo={setCreditCardInfo} />
         )}
       </StepChoiceContainer>
     </>

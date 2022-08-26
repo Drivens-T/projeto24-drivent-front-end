@@ -1,100 +1,92 @@
 import React from 'react';
+import { useState } from 'react';
 import Cards from 'react-credit-cards';
 import 'react-credit-cards/es/styles-compiled.css';
 import InputMask from 'react-input-mask';
 import styled from 'styled-components';
 import Button from '../Form/Button';
 
-export default class PaymentForm extends React.Component {
-  state = {
+export default function PaymentForm({ setCreditCardInfo }) {
+  const [focus, setFocus] = useState('');
+  const [creditCard, setCreditCard] = useState({
     cvc: '',
     expiry: '',
-    focus: '',
     name: '',
     number: '',
+  });
+  const { cvc, expiry, name, number } = creditCard;
+
+  const handleInputFocus = (e) => {
+    setFocus(e.target.name);
   };
 
-  handleInputFocus = (e) => {
-    this.setState({ focus: e.target.name });
-  };
-
-  handleInputChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
-
-    this.setState({ [name]: value });
+    setCreditCard({ ...creditCard, [name]: value });
   };
 
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // eslint-disable-next-line no-console
-    console.log(this.state);
+    setCreditCardInfo(creditCard);
   };
 
-  render() {
-    return (
-      <CardContainer>
-        <Cards
-          cvc={this.state.cvc}
-          expiry={this.state.expiry}
-          focused={this.state.focus}
-          name={this.state.name}
-          number={this.state.number}
-        />
-        <CardForm onSubmit={this.handleSubmit}>
-          <div>
-            <InputMask
-              type="tel"
-              name="number"
-              placeholder="Card Number"
-              required
-              onChange={this.handleInputChange}
-              onFocus={this.handleInputFocus}
-              mask="9999 9999 9999 9999"
-              maskChar=""
-              pattern="\b\d{4}[ ]?\d{4}[ ]?\d{4}[ ]?\d{4}\b"
-            />
-            <small>E.g.: 49..., 51..., 36..., 37...</small>
-          </div>
-          <input
-            type="text"
-            name="name"
-            placeholder="Name"
+  return (
+    <CardContainer>
+      <Cards cvc={cvc} expiry={expiry} focused={focus} name={name} number={number} />
+      <CardForm onSubmit={handleSubmit}>
+        <div>
+          <InputMask
+            type="tel"
+            name="number"
+            placeholder="Card Number"
             required
-            onChange={this.handleInputChange}
-            onFocus={this.handleInputFocus}
+            onChange={handleInputChange}
+            onFocus={handleInputFocus}
+            mask="9999 9999 9999 9999"
+            maskChar=""
+            pattern="\b\d{4}[ ]?\d{4}[ ]?\d{4}[ ]?\d{4}\b"
           />
-          <div>
-            <InputMask
-              type="tel"
-              name="expiry"
-              placeholder="Valid Thru"
-              pattern="\d\d/\d\d"
-              required
-              onChange={this.handleInputChange}
-              onFocus={this.handleInputFocus}
-              mask="99/99"
-              maskChar=""
-            />
-            <input
-              type="tel"
-              name="cvc"
-              placeholder="CVC"
-              pattern="\d{3,4}"
-              maxLength="4"
-              required
-              onChange={this.handleInputChange}
-              onFocus={this.handleInputFocus}
-            />
-          </div>
-          <SubmitContainer>
-            <Button type="submit" disabled={false}>
-              FINALIZAR PAGAMENTO
-            </Button>
-          </SubmitContainer>
-        </CardForm>
-      </CardContainer>
-    );
-  }
+          <small>E.g.: 49..., 51..., 36..., 37...</small>
+        </div>
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          required
+          onChange={handleInputChange}
+          onFocus={handleInputFocus}
+        />
+        <div>
+          <InputMask
+            type="tel"
+            name="expiry"
+            placeholder="Valid Thru"
+            pattern="\d\d/\d\d"
+            required
+            onChange={handleInputChange}
+            onFocus={handleInputFocus}
+            mask="99/99"
+            maskChar=""
+          />
+          <input
+            type="tel"
+            name="cvc"
+            placeholder="CVC"
+            pattern="\d{3,4}"
+            maxLength="4"
+            required
+            onChange={handleInputChange}
+            onFocus={handleInputFocus}
+          />
+        </div>
+        <SubmitContainer>
+          <Button type="submit" disabled={false}>
+            FINALIZAR PAGAMENTO
+          </Button>
+        </SubmitContainer>
+      </CardForm>
+    </CardContainer>
+  );
 }
 
 const CardContainer = styled.div`
