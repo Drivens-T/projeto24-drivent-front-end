@@ -10,11 +10,11 @@ export default function PaymentForm({ setCreditCardInfo }) {
   const [focus, setFocus] = useState('');
   const [creditCard, setCreditCard] = useState({
     cvc: '',
-    expiry: '',
+    expirationDate: '',
     name: '',
     number: '',
   });
-  const { cvc, expiry, name, number } = creditCard;
+  const { cvc, expirationDate, name, number } = creditCard;
 
   const handleInputFocus = (e) => {
     setFocus(e.target.name);
@@ -32,7 +32,7 @@ export default function PaymentForm({ setCreditCardInfo }) {
 
   return (
     <CardContainer>
-      <Cards cvc={cvc} expiry={expiry} focused={focus} name={name} number={number} />
+      <Cards cvc={cvc} expiry={expirationDate} focused={focus} name={name} number={number} />
       <CardForm onSubmit={handleSubmit}>
         <div>
           <InputMask
@@ -59,7 +59,7 @@ export default function PaymentForm({ setCreditCardInfo }) {
         <div>
           <InputMask
             type="tel"
-            name="expiry"
+            name="expirationDate"
             placeholder="Valid Thru"
             pattern="\d\d/\d\d"
             required
