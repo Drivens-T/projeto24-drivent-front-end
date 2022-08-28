@@ -5,7 +5,7 @@ export default function useAsync(handler, immediate = true) {
   const [loading, setLoading] = useState(immediate);
   const [error, setError] = useState(null);
 
-  // eslint-disable-next-line
+  // eslint-disable-next-line space-before-function-paren
   const act = async (...args) => {
     setLoading(true);
     setError(null);
