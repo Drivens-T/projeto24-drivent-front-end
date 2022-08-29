@@ -1,9 +1,13 @@
 import styled from 'styled-components';
 
-export default function OptionCard({ children, ...otherProps }) {
+export default function OptionCard({ children, large, ...otherProps }) {
   return (
     <>
-      <SquareOptionContainer {...otherProps}>{children}</SquareOptionContainer>
+      {large ? (
+        <LargeOptionContainer {...otherProps}>{children}</LargeOptionContainer>
+      ) : (
+        <SquareOptionContainer {...otherProps}>{children}</SquareOptionContainer>
+      )}
     </>
   );
 }
@@ -44,4 +48,12 @@ const SquareOptionContainer = styled.div`
       `;
     }
   }}
+`;
+
+const LargeOptionContainer = styled(SquareOptionContainer)`
+  width: 290px;
+  height: 108px;
+  background-color: #ffeed2;
+  border: none;
+  cursor: default;
 `;
