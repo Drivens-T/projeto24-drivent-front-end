@@ -8,7 +8,7 @@ export default function useModalities() {
     loading: modalitiesLoading,
     error: modalitiesError,
     act: getModalities,
-  } = useAsync(() => eventApi.getEventModalities());
+  } = useAsync(eventApi.getEventModalities);
 
   return {
     modalities,
