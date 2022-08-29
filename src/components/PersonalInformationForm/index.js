@@ -41,7 +41,8 @@ export default function PersonalInformationForm() {
   } = useForm({
     validations: FormValidations,
 
-    onSubmit: async(data) => {
+    // eslint-disable-next-line space-before-function-paren
+    onSubmit: async (data) => {
       const newData = {
         name: data.name,
         cpf: data.cpf.replaceAll('.', '').replaceAll('-', ''),
@@ -262,7 +263,7 @@ export default function PersonalInformationForm() {
               onChange={handleChange('addressDetail')}
             />
           </InputWrapper>
-          
+
           <SubmitContainer>
             <Button type="submit" disabled={dynamicInputIsLoading || saveEnrollmentLoading}>
               Salvar

@@ -6,7 +6,7 @@ import InputMask from 'react-input-mask';
 import styled from 'styled-components';
 import Button from '../Form/Button';
 
-export default function PaymentForm({ setCreditCardInfo }) {
+export default function PaymentForm({ handlePayment }) {
   const [focus, setFocus] = useState('');
   const [creditCard, setCreditCard] = useState({
     cvc: '',
@@ -25,15 +25,10 @@ export default function PaymentForm({ setCreditCardInfo }) {
     setCreditCard({ ...creditCard, [name]: value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setCreditCardInfo(creditCard);
-  };
-
   return (
     <CardContainer>
       <Cards cvc={cvc} expiry={expirationDate} focused={focus} name={name} number={number} />
-      <CardForm onSubmit={handleSubmit}>
+      <CardForm onSubmit={(e) => handlePayment(e, creditCard)}>
         <div>
           <InputMask
             type="tel"

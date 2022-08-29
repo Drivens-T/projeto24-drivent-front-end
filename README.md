@@ -50,7 +50,7 @@ Set `POSTGRES_HOST` to `localhost` for `.env.development` and `localhost` for `.
 
 Please notice that every ENV that should be available on browser should start with `REACT_APP_` prefix. There are several things you need to do when you add new ENV VARIABLES:
 
-- Add them to `.env.example` file
-- Add them to your local `.env` file
+- Add them to `.env.example` file.
+- Add them to your local `.env` file.
 - Add them to your docker-compose.yml file (just the name, not the value). Only envs listed in the environment section will be exposed to your docker container.
 - Add them (prod version) to your github repo secrets. They will be used to generate the `.env` file on deploy.
