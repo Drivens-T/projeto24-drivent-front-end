@@ -29,7 +29,7 @@ export default function Payment() {
             <CardsRow cards={cardsExample}></CardsRow>
           </>
         ) : (
-          <CardPayment setCreditCardInfo={setCreditCardInfo} />
+          <CardPayment setCreditCardInfo={setCreditCardInfo} creditCardInfo={creditCardInfo} />
         )}
       </StepChoiceContainer>
     </>
