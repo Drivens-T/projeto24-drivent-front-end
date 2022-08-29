@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
+import { FaCheckCircle as CheckIcon } from 'react-icons/fa';
 
 import useModalities from '../../../hooks/api/useModalities';
 import useEnrollment from '../../../hooks/api/useEnrollment';
@@ -172,8 +173,20 @@ export default function Payment() {
             </h6>
             <p>R$ {calculateTotalPrice()}</p>
           </OptionCard>
+        </StepChoiceContainer>
+        <StepChoiceContainer>
           <PageInformation>Pagamento</PageInformation>
-          {!paid ? <PaymentForm handlePayment={handlePayment}></PaymentForm> : <>Pagou</>}
+          {!paid ? (
+            <PaymentForm handlePayment={handlePayment}></PaymentForm>
+          ) : (
+            <PaymentConfirmation>
+              <CheckIcon fontSize="45px" color="#36B853" />
+              <TextContainer>
+                <h1>Pagamento confirmado!</h1>
+                <p>Prossiga para escolha de hospedagem e atividades</p>
+              </TextContainer>
+            </PaymentConfirmation>
+          )}
         </StepChoiceContainer>
       </>
     );
@@ -200,4 +213,26 @@ const StepChoiceContainer = styled.div`
   &:last-of-type {
     margin-bottom: 0;
   }
+`;
+
+const PaymentConfirmation = styled.div`
+  display: flex;
+  gap: 10px;
+
+  h1 {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  p {
+    font-size: 16px;
+    font-weight: 400;
+  }
+`;
+
+const TextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
 `;
