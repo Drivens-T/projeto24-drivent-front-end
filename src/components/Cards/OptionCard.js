@@ -41,6 +41,12 @@ const SquareOptionContainer = styled.div`
   }
 
   ${(props) => {
+    if (props.backgroundColor) {
+      return `background-color:${props.backgroundColor}`;
+    }
+    if (props.border) {
+      return `border: ${props.border}`;
+    }
     if (props.selected) {
       return `
       background-color:#FFEED2;
