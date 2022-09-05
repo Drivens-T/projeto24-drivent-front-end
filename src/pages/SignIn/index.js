@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useState, useContext, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -60,8 +61,8 @@ export default function SignIn() {
     const params = {
       response_type: 'code',
       scope: 'user public_repo',
-      client_id: process.env.CLIENT_ID,
-      redirect_uri: process.env.REDIRECT_URL,
+      client_id: process.env.REACT_APP_CLIENT_ID,
+      redirect_uri: process.env.REACT_APP_REDIRECT_URL,
       state: 'test-t5',
     };
 
@@ -77,7 +78,7 @@ export default function SignIn() {
       password: user.login,
     };
     try {
-      const userData = await axios.post(`${process.env.BACK_END_URL}/auth/usergithub`, users);
+      const userData = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/auth/usergithub`, users);
       setUserData(userData.data);
       toast('Login realizado com sucesso!');
       navigate('/dashboard');
