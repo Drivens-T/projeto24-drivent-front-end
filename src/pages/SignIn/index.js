@@ -3,7 +3,6 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import qs from 'query-string';
-import 'dotenv/config';
 
 import AuthLayout from '../../layouts/Auth';
 
@@ -27,6 +26,21 @@ export default function SignIn() {
   const { setUserData } = useContext(UserContext);
 
   const navigate = useNavigate();
+
+  useEffect(async() => {
+    const { code } = qs.parseUrl(window.location.href).query;
+    console.log(code, 'codigo');
+    if (code) {
+      try {
+        const response = await axios.post('http://localhost:4000/auth/login', { code });
+        const user = response.data;
+        console.log(user);
+        authorizateGithub(user);
+      } catch (err) {
+        console.log('err', err);
+      }
+    }
+  }, []);
 
   async function submit(event) {
     event.preventDefault();
@@ -57,29 +71,14 @@ export default function SignIn() {
     window.location.href = authorizationUrl;
   }
 
-  useEffect(async() => {
-    const { code } = qs.parseUrl(window.location.href).query;
-    console.log(code, 'codigo');
-    if (code) {
-      try {
-        const response = await axios.post('http://localhost:4000/auth/login', { code });
-        const user = response.data;
-        console.log(user);
-        test(user);
-      } catch (err) {
-        console.log('err', err);
-      }
-    }
-  }, []);
-
-  async function test(user) {
+  async function authorizateGithub(user) {
     const users = {
       email: user.email,
       password: user.login,
     };
     try {
       const userData = await axios.post('http://localhost:4000/auth/usergithub', users);
-      setUserData(userData);
+      setUserData(userData.data);
       toast('Login realizado com sucesso!');
       navigate('/dashboard');
     } catch (err) {
@@ -107,8 +106,8 @@ export default function SignIn() {
           <Button type="submit" color="primary" fullWidth disabled={loadingSignIn}>
             Entrar
           </Button>
+          <Button fullWidth color="secondary" onClick={loginGithub}>Entrar com Github</Button>
         </form>
-        <Button fullWidth color="secondary" onClick={loginGithub}>Entrar com Github</Button>
       </Row>
       <Row>
         <Link to="/enroll">Não possui login? Inscreva-se</Link>
