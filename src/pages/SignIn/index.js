@@ -60,8 +60,8 @@ export default function SignIn() {
     const params = {
       response_type: 'code',
       scope: 'user public_repo',
-      client_id: '035e8d2190f6b1c068bb',
-      redirect_uri: 'http://localhost:3000/sign-in',
+      client_id: process.env.CLIENT_ID,
+      redirect_uri: process.env.REDIRECT_URL,
       state: 'test-t5',
     };
 
@@ -77,7 +77,7 @@ export default function SignIn() {
       password: user.login,
     };
     try {
-      const userData = await axios.post('http://localhost:4000/auth/usergithub', users);
+      const userData = await axios.post(`${process.env.BACK_END_URL}/auth/usergithub`, users);
       setUserData(userData.data);
       toast('Login realizado com sucesso!');
       navigate('/dashboard');
