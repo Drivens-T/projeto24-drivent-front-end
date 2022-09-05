@@ -64,14 +64,28 @@ export default function SignIn() {
       try {
         const response = await axios.post('http://localhost:4000/auth/login', { code });
         const user = response.data;
-        alert('você está logado, meu chapa! dá uma olhada no console!');
         console.log(user);
+        test(user);
       } catch (err) {
-        alert('ops, deu algum xabú');
         console.log('err', err);
       }
     }
   }, []);
+
+  async function test(user) {
+    const users = {
+      email: user.email,
+      password: user.login,
+    };
+    try {
+      const userData = await axios.post('http://localhost:4000/auth/usergithub', users);
+      setUserData(userData);
+      toast('Login realizado com sucesso!');
+      navigate('/dashboard');
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <AuthLayout background={eventInfo.backgroundImageUrl}>
