@@ -112,8 +112,10 @@ export default function Payment() {
                       handleCardClick(accommodationType, chosenAccommodationType, setChosenAccommodationType)
                     }
                   >
-                    <h6>{accommodationType.name}</h6>
-                    <p>R$ {accommodationType.price}</p>
+                    <StyleWrapper>
+                      <h6>{accommodationType.name}</h6>
+                      <p>R$ {accommodationType.price}</p>
+                    </StyleWrapper>
                   </OptionCard>
                 );
               })}
@@ -151,8 +153,10 @@ export default function Payment() {
                     key={modality.id}
                     onClick={() => handleCardClick(modality, chosenModality, setChosenModality)}
                   >
-                    <h6>{modality.name}</h6>
-                    <p>R$ {modality.price}</p>
+                    <StyleWrapper>
+                      <h6>{modality.name}</h6>
+                      <p>R$ {modality.price}</p>
+                    </StyleWrapper>
                   </OptionCard>
                 );
               })}

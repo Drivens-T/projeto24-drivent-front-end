@@ -53,7 +53,7 @@ export default function Hotel() {
   }
 
   async function handleBookHotelRoom() {
-    if (chosenRoomId === bookedRoom.id) {
+    if (chosenRoomId === bookedRoom?.id) {
       toast('Quarto reservado com sucesso!');
       getBookedRoom();
       setChangeRoom(false);
