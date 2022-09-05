@@ -16,6 +16,7 @@ const MessageWrapper = styled.div`
   transform: translate(0, -50%);
 
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
@@ -26,5 +27,5 @@ const StyledMessage = styled.p`
   line-height: 23px;
   text-align: center;
   color: #8e8e8e;
-  max-width: 440px;
+  max-width: 510px;
 `;
