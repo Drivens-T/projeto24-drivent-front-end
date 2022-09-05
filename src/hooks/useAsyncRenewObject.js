@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export default function useAsync(handler, immediate = true, initialState = null) {
+export default function useAsyncRenewObject(handler, immediate = true, initialState = null) {
   const [data, setData] = useState(initialState);
   const [loading, setLoading] = useState(immediate);
   const [error, setError] = useState(null);
@@ -12,7 +12,7 @@ export default function useAsync(handler, immediate = true, initialState = null)
 
     try {
       const data = await handler(...args);
-      setData(data);
+      if (data) setData({ ...data });
       setLoading(false);
       return data;
     } catch (err) {
