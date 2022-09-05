@@ -108,7 +108,7 @@ export default function SignIn() {
             Entrar
           </Button>
         </form>
-        <button onClick={loginGithub}>Entrar com Github</button>
+        <Button fullWidth color="secondary" onClick={loginGithub}>Entrar com Github</Button>
       </Row>
       <Row>
         <Link to="/enroll">Não possui login? Inscreva-se</Link>
