@@ -16,12 +16,6 @@ const SquareOptionContainer = styled.div`
   width: 145px;
   height: 145px;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 3px;
-
   border: 1px solid #cecece;
   border-radius: 20px;
 
@@ -30,27 +24,33 @@ const SquareOptionContainer = styled.div`
 
   cursor: pointer;
 
-  h6 {
-    font-size: 16px;
-    color: #454545;
-  }
-
-  p {
-    font-size: 14px;
-    color: #898989;
-  }
-
-  ${(props) => {
-    if (props.backgroundColor) {
-      return `background-color:${props.backgroundColor}`;
+  ${({ backgroundColor }) => {
+    if (backgroundColor) {
+      return `background-color:${backgroundColor};`;
     }
-    if (props.border) {
-      return `border: ${props.border}`;
+  }}
+
+  ${({ border }) => {
+    if (border) {
+      return `border: ${border};`;
     }
-    if (props.selected) {
+  }}
+  
+  ${({ selected }) => {
+    if (selected) {
       return `
       background-color:#FFEED2;
       border: none;
+      `;
+    }
+  }}
+  
+  ${({ cardSize }) => {
+    if ('medium') {
+      return `
+      width: 196px;
+      height: 100%;
+      border-radius: 10px;
       `;
     }
   }}

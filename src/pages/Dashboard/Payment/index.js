@@ -166,12 +166,14 @@ export default function Payment() {
         <StepChoiceContainer>
           <PageInformation>Ingresso escolhido</PageInformation>
           <OptionCard large>
-            <h6>
-              {chosenModality?.name}
-              {chosenAccommodationType?.name && ' + '}
-              {chosenAccommodationType?.name}
-            </h6>
-            <p>R$ {calculateTotalPrice()}</p>
+            <StyleWrapper>
+              <h6>
+                {chosenModality?.name}
+                {chosenAccommodationType?.name && ' + '}
+                {chosenAccommodationType?.name}
+              </h6>
+              <p>R$ {calculateTotalPrice()}</p>
+            </StyleWrapper>
           </OptionCard>
         </StepChoiceContainer>
         <StepChoiceContainer>
@@ -204,7 +206,7 @@ export default function Payment() {
   );
 }
 
-const StepChoiceContainer = styled.div`
+export const StepChoiceContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 17px;
@@ -235,4 +237,24 @@ const TextContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   gap: 3px;
+`;
+
+const StyleWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+
+  height: 100%;
+
+  h6 {
+    font-size: 16px;
+    color: #454545;
+  }
+
+  p {
+    font-size: 14px;
+    color: #898989;
+  }
 `;
