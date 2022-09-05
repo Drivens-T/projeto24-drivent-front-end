@@ -1,6 +1,9 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import qs from 'query-string';
+import 'dotenv/config';
 
 import AuthLayout from '../../layouts/Auth';
 
@@ -24,7 +27,7 @@ export default function SignIn() {
   const { setUserData } = useContext(UserContext);
 
   const navigate = useNavigate();
-  
+
   async function submit(event) {
     event.preventDefault();
 
@@ -36,7 +39,39 @@ export default function SignIn() {
     } catch (err) {
       toast('Não foi possível fazer o login!');
     }
-  } 
+  }
+
+  async function loginGithub() {
+    const GITHUB_AUTH_URL = 'https://github.com/login/oauth/authorize';
+    const params = {
+      response_type: 'code',
+      scope: 'user public_repo',
+      client_id: '035e8d2190f6b1c068bb',
+      redirect_uri: 'http://localhost:3000/sign-in',
+      state: 'test-t5',
+    };
+
+    const queryStrings = qs.stringify(params);
+    const authorizationUrl = `${GITHUB_AUTH_URL}?${queryStrings}`;
+
+    window.location.href = authorizationUrl;
+  }
+
+  useEffect(async() => {
+    const { code } = qs.parseUrl(window.location.href).query;
+    console.log(code, 'codigo');
+    if (code) {
+      try {
+        const response = await axios.post('http://localhost:4000/auth/login', { code });
+        const user = response.data;
+        alert('você está logado, meu chapa! dá uma olhada no console!');
+        console.log(user);
+      } catch (err) {
+        alert('ops, deu algum xabú');
+        console.log('err', err);
+      }
+    }
+  }, []);
 
   return (
     <AuthLayout background={eventInfo.backgroundImageUrl}>
@@ -47,10 +82,19 @@ export default function SignIn() {
       <Row>
         <Label>Entrar</Label>
         <form onSubmit={submit}>
-          <Input label="E-mail" type="text" fullWidth value={email} onChange={e => setEmail(e.target.value)} />
-          <Input label="Senha" type="password" fullWidth value={password} onChange={e => setPassword(e.target.value)} />
-          <Button type="submit" color="primary" fullWidth disabled={loadingSignIn}>Entrar</Button>
+          <Input label="E-mail" type="text" fullWidth value={email} onChange={(e) => setEmail(e.target.value)} />
+          <Input
+            label="Senha"
+            type="password"
+            fullWidth
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button type="submit" color="primary" fullWidth disabled={loadingSignIn}>
+            Entrar
+          </Button>
         </form>
+        <button onClick={loginGithub}>Entrar com Github</button>
       </Row>
       <Row>
         <Link to="/enroll">Não possui login? Inscreva-se</Link>
