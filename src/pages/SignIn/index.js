@@ -33,7 +33,7 @@ export default function SignIn() {
     console.log(code, 'codigo');
     if (code) {
       try {
-        const response = await axios.post('http://localhost:4000/auth/login', { code });
+        const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/auth/login`, { code });
         const user = response.data;
         console.log(user);
         authorizateGithub(user);
