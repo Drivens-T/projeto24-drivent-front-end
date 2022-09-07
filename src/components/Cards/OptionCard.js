@@ -28,14 +28,14 @@ const SquareOptionContainer = styled.div`
     if (backgroundColor) {
       return `background-color:${backgroundColor};`;
     }
-  }}
+  }};
 
   ${({ border }) => {
     if (border) {
       return `border: ${border};`;
     }
-  }}
-  
+  }};
+
   ${({ selected }) => {
     if (selected) {
       return `
@@ -43,10 +43,10 @@ const SquareOptionContainer = styled.div`
       border: none;
       `;
     }
-  }}
-  
+  }};
+
   ${({ cardSize }) => {
-    if ('medium') {
+    if (cardSize === 'medium') {
       return `
       width: 196px;
       height: 100%;
