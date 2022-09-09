@@ -8,22 +8,29 @@ import useRegisterUserToActivity from '../hooks/api/useRegisterUserToActivity';
 
 export default function ActivitiesBox(props) {
   const { activity, schedules } = props;
-  const { name, startTime, endTime, capacity, id } = activity;
-  const [register, setRegister] = useState(false);
+  const { name, startTime, endTime, capacity, isRegister, id } = activity;
+  const [register, setRegister] = useState(isRegister);
 
   const { registerUserToActivity, registerUserToActivityLoading } = useRegisterUserToActivity();
 
   const start = startTime.substring(11, 16);
   const end = endTime.substring(11, 16);
   const duration = calculateActivityDuration(startTime, endTime);
-  let conflict = checkTimeConflict(schedules, start, end);
+  let conflict = checkTimeConflict(schedules, startTime, endTime);
 
   function checkTimeConflict(schedules, start, end) {
-    conflict = false;
+    let conflict = false;
     schedules.forEach((schedule) => {
-      const scheduleStart = schedule.startTime.substring(11, 16);
-      const scheduleEnd = schedule.endTime.substring(11, 16);
-      if ((start >= scheduleStart && start < scheduleEnd) || (end > scheduleStart && end <= scheduleEnd)) {
+      const scheduleDate = schedule.startTime.substring(0, 5);
+      const activityDate = start.substring(0, 5);
+      const startValue = parseInt(start.substring(11, 13));
+      const endValue = parseInt(end.substring(11, 13));
+      const scheduleStart = parseInt(schedule.startTime.substring(11, 13));
+      const scheduleEnd = parseInt(schedule.endTime.substring(11, 13));
+      if (
+        (startValue >= scheduleStart && startValue < scheduleEnd && scheduleDate === activityDate) ||
+        (endValue > scheduleStart && endValue <= scheduleEnd && scheduleDate === activityDate)
+      ) {
         conflict = true;
       }
     });
@@ -36,6 +43,7 @@ export default function ActivitiesBox(props) {
     };
     if (conflict === true) {
       toast('Você já se inscreveu em uma atividade nesse horário!');
+      return;
     }
     try {
       await registerUserToActivity(newData);
