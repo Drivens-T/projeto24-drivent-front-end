@@ -6,6 +6,8 @@ on:
 name: Build and Deploy
 env:
   REACT_APP_API_BASE_URL: /api
+  REACT_APP_CLIENT_ID: 9e1002bba6271628c0fb
+  REACT_APP_REDIRECT_URL: http://drivent.gq/sign-in
 jobs:
   build:
     runs-on: drivent
