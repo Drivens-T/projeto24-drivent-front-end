@@ -73,7 +73,7 @@ export default function SignIn() {
     console.log({ client_id: process.env.REACT_APP_CLIENT_ID });
     console.log({ redirect_uri: process.env.REACT_APP_REDIRECT_URL });
 
-    window.location.href = authorizationUrl;
+    //window.location.href = authorizationUrl;
   }
 
   async function authorizateGithub(user) {
