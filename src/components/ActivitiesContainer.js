@@ -7,20 +7,36 @@ import { AiOutlineCheckCircle } from 'react-icons/ai';
 import useRegisterUserToActivity from '../hooks/api/useRegisterUserToActivity';
 
 export default function ActivitiesBox(props) {
-  const { activity } = props;
+  const { activity, schedules } = props;
   const { name, startTime, endTime, capacity, id } = activity;
   const [register, setRegister] = useState(false);
-  
+
   const { registerUserToActivity, registerUserToActivityLoading } = useRegisterUserToActivity();
 
   const start = startTime.substring(11, 16);
   const end = endTime.substring(11, 16);
   const duration = calculateActivityDuration(startTime, endTime);
+  let conflict = checkTimeConflict(schedules, start, end);
+
+  function checkTimeConflict(schedules, start, end) {
+    conflict = false;
+    schedules.forEach((schedule) => {
+      const scheduleStart = schedule.startTime.substring(11, 16);
+      const scheduleEnd = schedule.endTime.substring(11, 16);
+      if ((start >= scheduleStart && start < scheduleEnd) || (end > scheduleStart && end <= scheduleEnd)) {
+        conflict = true;
+      }
+    });
+    return conflict;
+  }
 
   async function handleRegisterClick() {
     const newData = {
       id,
     };
+    if (conflict === true) {
+      toast('Você já se inscreveu em uma atividade nesse horário!');
+    }
     try {
       await registerUserToActivity(newData);
       setRegister(true);
@@ -31,8 +47,8 @@ export default function ActivitiesBox(props) {
   }
 
   function calculateActivityDuration(startTime, endTime) {
-    const start = parseInt(startTime.substr(11, 2));
-    const end = parseInt(endTime.substr(11, 2));
+    const start = parseInt(startTime.substring(11, 13));
+    const end = parseInt(endTime.substring(11, 13));
     const duration = end - start;
     return duration;
   }
@@ -46,8 +62,8 @@ export default function ActivitiesBox(props) {
             {start} - {end}
           </p>
         </MinorDiv>
-        <Bar duration={duration}/>
-        <Enroll onClick={handleRegisterClick} disabled={registerUserToActivityLoading}/>
+        <Bar duration={duration} />
+        <Enroll onClick={handleRegisterClick} disabled={registerUserToActivityLoading} />
         <Vacancies>{capacity} vagas</Vacancies>
       </Events>
     ) : (
@@ -58,7 +74,7 @@ export default function ActivitiesBox(props) {
             {start} - {end}
           </p>
         </MinorDiv>
-        <Bar duration={duration} register={register}/>
+        <Bar duration={duration} register={register} />
         <Check />
         <Vacancies>Inscrito</Vacancies>
       </Events>
@@ -95,7 +111,7 @@ export const Events = styled.div`
       return `
       background-color:#D0FFDB;
       `;
-    }else{
+    } else {
       return `
       background-color:#f1f1f1;
       `;
@@ -116,7 +132,7 @@ export const MinorDiv = styled.div`
       return `
       background-color:#D0FFDB;
       `;
-    }else{
+    } else {
       return `
       background-color:#f1f1f1;
       `;
@@ -152,7 +168,7 @@ export const Bar = styled.div`
       return `
       background-color:#99E8A1;
       `;
-    }else{
+    } else {
       return `
       background-color:#cfcfcf;
       `;

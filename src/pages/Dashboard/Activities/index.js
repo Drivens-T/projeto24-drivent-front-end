@@ -14,8 +14,13 @@ export default function Activities() {
   const { ticket } = useTicket();
   const { eventLocations } = useEventLocations();
   const { activitiesData } = useActivities();
-  const { activities, activitiesDate } = activitiesData;
   const [chosenDay, setChosenDay] = useState('');
+  const schedules = [];
+  activitiesData?.activities.forEach((activity) => {
+    if (activity.isRegister === true) {
+      schedules.push(activity);
+    }  
+  });
 
   function handleDayClick(date, chosenDay, setChosenDay) {
     if (chosenDay !== date) setChosenDay(date);
@@ -26,7 +31,7 @@ export default function Activities() {
       <>
         <PageInformation>Primeiro, filtre pelo dia do evento: </PageInformation>
         <Days>
-          {activitiesDate.map((date) => {
+          {activitiesData?.activitiesDate.map((date) => {
             return (
               <StyledDayButton
                 selected={date === chosenDay}
@@ -42,7 +47,7 @@ export default function Activities() {
     ) : (
       <>
         <Days>
-          {activitiesDate.map((date) => {
+          {activitiesData?.activitiesDate.map((date) => {
             return (
               <StyledDayButton
                 selected={date === chosenDay}
@@ -55,15 +60,15 @@ export default function Activities() {
           })}
         </Days>
         <Container>
-          {eventLocations.map((location) => {
+          {eventLocations?.map((location) => {
             return (
               <Content key={location.id}>
                 <h5>{location.name}</h5>
                 <Box>
-                  {activities.map((activity) => {
-                    if (activity.location.name === location.name && chosenDay.substring(8).trim() === activity.startTime.substring(0, 5).trim()) {
+                  {activitiesData?.activities.map((activity) => {
+                    if (activity?.location.name === location?.name && chosenDay.substring(8).trim() === activity?.startTime.substring(0, 5).trim()) {
                       return (
-                        <ActivitiesBox key={activity.id} activity={activity} />);
+                        <ActivitiesBox key={activity.id} activity={activity} schedules={schedules} />);
                     }
                   })}
                 </Box>
@@ -78,7 +83,7 @@ export default function Activities() {
   function verifyModality() {
     return (
       <>
-        {ticket.modalityId === 2 ? (
+        {ticket?.modalityId === 2 ? (
           <Message>
             Sua modalidade de ingresso não necessita escolher atividade. Você terá acesso a todas as atividades.
           </Message>
@@ -92,7 +97,7 @@ export default function Activities() {
   return (
     <>
       <StyledTypography variant="h4">Escolha de atividades</StyledTypography>
-      {!ticket.paid ? (
+      {!ticket?.paid ? (
         <Message>Você precisa ter confirmado pagamento antes de fazer a escolha de atividades</Message>
       ) : (
         verifyModality()

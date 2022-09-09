@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
-export default function useAsync(handler, immediate = true) {
-  const [data, setData] = useState(null);
+export default function useAsync(handler, immediate = true, initialState = null) {
+  const [data, setData] = useState(initialState);
   const [loading, setLoading] = useState(immediate);
   const [error, setError] = useState(null);
 
