@@ -68,12 +68,8 @@ export default function SignIn() {
 
     const queryStrings = qs.stringify(params);
     const authorizationUrl = `${GITHUB_AUTH_URL}?${queryStrings}`;
-    
-    //https://github.com/login/oauth/authorize?response_type=code&scope=user%20public_repo&state=test-t5
-    console.log({ client_id: process.env.REACT_APP_CLIENT_ID });
-    console.log({ redirect_uri: process.env.REACT_APP_REDIRECT_URL });
 
-    //window.location.href = authorizationUrl;
+    window.location.href = authorizationUrl;
   }
 
   async function authorizateGithub(user) {
