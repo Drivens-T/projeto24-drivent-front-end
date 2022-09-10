@@ -89,7 +89,7 @@ export default function ActivitiesBox(props) {
     );
   }
 
-  return capacity === 0 ? (
+  return capacity === 0 && isRegister === false ? (
     <Events duration={duration}>
       <MinorDiv duration={duration}>
         <h1>{name}</h1>

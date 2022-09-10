@@ -1,7 +1,7 @@
 import api from './api';
 
 export async function register(body, token) {
-  const response = await api.post('/activities', body, {
+  const response = await api.post('/activities/register', body, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
